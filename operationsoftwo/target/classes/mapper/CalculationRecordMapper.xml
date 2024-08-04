@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.operationsoftwo.mapper.CalculationRecordMapper">
+
+    <select id="selectByCriteria" resultType="com.example.operationsoftwo.entity.CalculationRecord">
+        SELECT * FROM calculation_record
+        WHERE 1=1
+        <if test="startTime != null and startTime != ''">
+            AND request_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND request_time &lt;= #{endTime}
+        </if>
+        <if test="operator != null and operator != ''">
+            AND operator = #{operator}
+        </if>
+        ORDER BY request_time DESC
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert" parameterType="com.example.operationsoftwo.entity.CalculationRecord">
+        INSERT INTO calculation_record (request_time, num1, operator, num2, success, result)
+        VALUES (#{requestTime}, #{num1}, #{operator}, #{num2}, #{success}, #{result})
+    </insert>
+
+</mapper>
